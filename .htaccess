@@ -1,0 +1,14 @@
+<IfModule mod_rewrite.c>
+    #Options +FollowSymlinks
+    RewriteEngine On
+    RewriteRule ^web/App.php/(.*)$ /$1 [R=301,L]
+
+    #Explicitly disable rewriting for front controllers
+    RewriteRule ^App_dev.php - [NC,L]
+    RewriteRule ^App.php - [NC,L]
+        
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^(.*)$ web/App.php [QSA,L]
+    #RewriteRule ^(.*)$ web/App_dev.php [QSA,L]
+</IfModule>
+#php_value date.timezone Europe/Kiev
