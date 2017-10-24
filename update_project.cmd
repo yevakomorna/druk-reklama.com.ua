@@ -1,2 +1,2 @@
-call /server/xampp/7.0.8/php/php /server/dedicated/composer/composer.phar update
+call /server/xampp/5.6.23/php/php /server/dedicated/composer/composer.phar update
 Pause
