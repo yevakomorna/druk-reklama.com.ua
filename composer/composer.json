@@ -1,0 +1,22 @@
+{
+    "autoload": {
+        "psr-4": {
+            "AppBundle\\": "../src/AppBundle"
+        },
+        "classmap": [ "../app/AppKernel.php", "../app/AppCache.php" ]
+    },
+    "config": {
+        "vendor-dir": "../vendor"
+    },
+    "require": {
+        "symfony/symfony": "3.*",
+        "sensio/framework-extra-bundle": "*",
+        "doctrine/orm": "*",
+        "doctrine/doctrine-bundle": "*",
+        "jms/di-extra-bundle": "1.8.*",
+        "symfony/swiftmailer-bundle": "*",
+        "symfony/yaml": "*",
+        "symfony/monolog-bundle": "*",
+        "jms/i18n-routing-bundle": "*"
+    }
+}

@@ -1,0 +1,28 @@
+imports:
+    - { resource: config.yml }
+framework:
+    router:
+        resource: "%kernel.root_dir%/config/routing-dev.yml"   
+    profiler:
+        enabled: true
+        collect: true
+        only_exceptions: false    
+        matcher:
+            ip: 127.0.0.1
+doctrine:
+    dbal:
+        driver: pdo_mysql
+        host: 127.0.0.1
+        port: null
+        dbname: z_reklama_shop
+        user: root
+        password: demon
+        charset: utf8mb4
+        default_table_options:
+            charset: utf8mb4
+            collate: utf8mb4_unicode_ci
+        logging: true
+web_profiler:
+    toolbar: true
+    intercept_redirects: false
+    
