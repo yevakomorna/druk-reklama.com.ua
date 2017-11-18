@@ -9,6 +9,7 @@
         "vendor-dir": "../vendor"
     },
     "require": {
+        "php": ">=5.5.9",
         "symfony/symfony": "3.*",
         "sensio/framework-extra-bundle": "*",
         "doctrine/orm": "*",
@@ -17,6 +18,25 @@
         "symfony/swiftmailer-bundle": "*",
         "symfony/yaml": "*",
         "symfony/monolog-bundle": "*",
-        "jms/i18n-routing-bundle": "*"
+        "jms/i18n-routing-bundle": "*",
+        "sensio/distribution-bundle": "^5.0.19"
+    },
+    "scripts": {
+        "symfony-scripts": [
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+        ],
+        "post-install-cmd": [
+            "@symfony-scripts"
+        ],
+        "post-update-cmd": [
+            "@symfony-scripts"
+        ]
+    },
+    "extra": {
+        "symfony-app-dir": "../app",
+        "symfony-bin-dir": "../bin",
+        "symfony-var-dir": "../var",
+        "symfony-web-dir": "../web"
     }
 }

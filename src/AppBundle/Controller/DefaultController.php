@@ -19,17 +19,8 @@ class DefaultController extends Controller {
      * @Route("/", name="home")
      */
     public function home(Request $request) {
-        var_dump($this->SectionDAO->findAll()[0]);
         // replace this example code with whatever you need
-        return ['base_dir' => realpath($this->container->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR, ];
-    }
-
-    /**
-     * @Template("default/admin.html")
-     * @Route("/admin", name="admin")
-     */
-    public function admin() {
-        return [];
+        return ['base_dir' => realpath($this->container->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR ];
     }
 
     /**
@@ -37,6 +28,15 @@ class DefaultController extends Controller {
      * @Route("/{category}", name="category")
      */
     public function categoryPage($category) {
+        var_dump($category);
+        return [];
+    }
+    
+    /**
+     * @Template("default/category.html")
+     * @Route("/{category}/edit_category", name="category")
+     */
+    public function categoryPageEdit($category) {
         var_dump($category);
         return [];
     }
