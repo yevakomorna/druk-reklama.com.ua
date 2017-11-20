@@ -19,6 +19,7 @@ class AppKernel extends Kernel
     		new JMS\AopBundle\JMSAopBundle(),
     		new JMS\I18nRoutingBundle\JMSI18nRoutingBundle(),
             new AppBundle\AppBundle(),
+			new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

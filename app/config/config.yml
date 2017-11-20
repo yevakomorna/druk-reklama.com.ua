@@ -8,6 +8,8 @@ framework:
         enable_annotations: true
     templating:
         engines: ["twig"]
+    assets:
+      base_urls: ["http://z-reklama.shop/web/"]
     default_locale: ru
     translator:
         enabled: true
@@ -21,6 +23,7 @@ framework:
         gc_divisor: 100
     serializer:
         enabled: true
+    form: ~
 doctrine:
     orm:
         auto_generate_proxy_classes: true
@@ -64,4 +67,3 @@ monolog:
             type: stream
             path: "%kernel.logs_dir%/doctrine.log"            
             channels: [doctrine]
-            
