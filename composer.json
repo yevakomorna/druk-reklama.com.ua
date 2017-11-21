@@ -6,7 +6,8 @@
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
     },
     "config": {
-        "vendor-dir": "vendor"
+        "vendor-dir": "vendor",
+        "component-dir": "web/assets"
     },
     "require": {
         "php": ">=5.5.9",

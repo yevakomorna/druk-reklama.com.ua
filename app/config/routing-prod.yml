@@ -4,3 +4,5 @@ _general:
 _app:
     resource: '@AppBundle/controller/'
     type: annotation
+elfinder:
+     resource: "@FMElfinderBundle/Resources/config/routing.yml"

@@ -3,6 +3,7 @@ namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use JMS\DiExtraBundle\Annotation\Inject;
@@ -21,25 +22,26 @@ class DefaultController extends Controller {
      * @Template("default/index.html")
      * @Route("/", name="home")
      */
-    public function home(Request $request) {
+    public function home() {
         // replace this example code with whatever you need
-        return ['base_dir' => realpath($this->container->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR];
+        return $this->categoryPage('home');
     }
 
     /**
-     * @Template("default/category.html")
-     * @Route("/{category}", name="category")
+     * @Route("/{category_nick}", name="category_nick")
+     * 
      */
-    public function categoryPage($category) {
-        var_dump($category);
-        $category_item = $this->SectionDAO->findOneBy(['name' => $category]);
-        var_dump($category_item->name);
+    public function categoryPage($category_nick) {
 
-        return [];
+        $category = $this->SectionDAO->findOneBy(['name' => $category_nick]);
+
+        $data = [];
+
+        return $this->render('default/body/' . $category->getTemplateBody() . '.html', ['data' => $data]);
     }
 
     /**
-     * @Template("default/category.html")
+     * @Template("default/edit_category.html")
      * @Route("/edit_category/", defaults={"category" = "home"})
      * @Route("/edit_category/{category}", name="edit_category")
      */
@@ -49,7 +51,7 @@ class DefaultController extends Controller {
 
         $builder = $this->createFormBuilder();
 
-        $builder->add('introtext', CKEditorType::class, ['attr' => ['class' => 'tinymce'], 'config' => ['uiColor' => '#ffffff', ], ]);
+        $builder->add('introtext', CKEditorType::class, ['attr' => ['class' => 'tinymce'], 'config' => ['uiColor' => '#ffffff', 'filebrowserBrowseRoute' => 'elfinder', 'filebrowserBrowseRouteParameters' => ['instance' => 'default', 'homeFolder' => 'uploads']], ]);
         $builder->add('save', SubmitType::class, ['label' => 'save']);
         $form = $builder->getForm();
 

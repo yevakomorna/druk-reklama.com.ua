@@ -15,6 +15,11 @@ class SectionEntity extends BaseIntegerEntity {
     private $name;
 
     /**
+     * @ORM\Column(name="template_body", type="string")
+     */
+    private $templateBody;
+
+    /**
      * @ORM\Column(name="status", type="integer")
      */
     private $status;
@@ -25,6 +30,14 @@ class SectionEntity extends BaseIntegerEntity {
 
     public function setName($name) {
         $this->name = $name;
+    }
+
+    public function getTemplateBody() {
+        return $this->templateBody;
+    }
+
+    public function setTemplateBody($templateBody) {
+        $this->templateBody = $templateBody;
     }
 
     public function getStatus() {

@@ -20,6 +20,7 @@ class AppKernel extends Kernel
     		new JMS\I18nRoutingBundle\JMSI18nRoutingBundle(),
             new AppBundle\AppBundle(),
 			new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
+			new FM\ElfinderBundle\FMElfinderBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
