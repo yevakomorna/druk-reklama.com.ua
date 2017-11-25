@@ -9,6 +9,20 @@
         "vendor-dir": "vendor",
         "component-dir": "web/assets"
     },
+    "repositories": {
+        "stellarnav": {
+        "type": "package",
+        "package": {
+          "name": "vinnymoreira/stellarnav",
+          "version": "1.0",
+          "source": {
+            "url": "https://github.com/vinnymoreira/stellarnav.git",
+            "type": "git",
+            "reference": "master"
+          }
+        }
+      }
+    },
     "require": {
         "php": ">=5.5.9",
         "symfony/symfony": "3.*",
@@ -22,7 +36,10 @@
         "jms/i18n-routing-bundle": "*",
         "sensio/distribution-bundle": "^5.0.19",
         "helios-ag/fm-elfinder-bundle": "~6",
-        "egeloen/ckeditor-bundle": "*"                                               
+        "egeloen/ckeditor-bundle": "*",
+        "symfony/finder": "*",
+        "twitter/bootstrap-bundle": "*",
+        "vinnymoreira/stellarnav": "*"
                   
     },
     "scripts": {

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "2ce63f786949831cca2cf22787d5e2d9",
+    "content-hash": "d4309a9181e78ea130fa2a83e7198e17",
     "packages": [
         {
             "name": "components/elfinder",
@@ -3279,6 +3279,65 @@
                 "templating"
             ],
             "time": "2017-09-27T18:10:31+00:00"
+        },
+        {
+            "name": "twitter/bootstrap-bundle",
+            "version": "2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/andrey1s/TwitterBootstrapBundle.git",
+                "reference": "6e75c845264d1f32674f3d2d46207d20cd91252f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/andrey1s/TwitterBootstrapBundle/zipball/6e75c845264d1f32674f3d2d46207d20cd91252f",
+                "reference": "6e75c845264d1f32674f3d2d46207d20cd91252f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4",
+                "symfony/twig-bridge": "~2.8|~3.0"
+            },
+            "require-dev": {
+                "friendsofsymfony/user-bundle": "2.0.*@dev",
+                "knplabs/knp-paginator-bundle": "~2.3"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Twitter\\BootstrapBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Samusev Andrey",
+                    "email": "andrey_simfi@list.ru",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Sleek, intuitive, and powerful front-end framework for faster and easier web development. integration into Symfony2.",
+            "homepage": "http://twitter.github.com/bootstrap/",
+            "keywords": [
+                "front-end framework",
+                "symfony twitter bootstrap",
+                "twitter",
+                "twitter bootstrap"
+            ],
+            "time": "2016-07-02T10:22:47+00:00"
+        },
+        {
+            "name": "vinnymoreira/stellarnav",
+            "version": "1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/vinnymoreira/stellarnav.git",
+                "reference": "master"
+            },
+            "type": "library"
         }
     ],
     "packages-dev": [],

@@ -1,32 +1,130 @@
 <!DOCTYPE html>
-
 <html>
-	<head>
-		{% block title %}
-		<title>simpleLayout</title>
-		{% endblock %}
-		
-		<meta charset="utf-8">
-		
-		<meta name="description" content="">
- 		<meta name="keywords" content="">
-		
-		<link rel="icon" type="image/ico" href="/web/image/favicon.ico"/>
-		
-        {% block css %}
-		
-		{% endblock %}				
+<head>
+{% block title %}
+<title>simpleLayout</title>
+{% endblock %}
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link rel="icon" type="image/ico" href="/web/image/favicon.ico"/>
+{% block css %}
+<link rel="stylesheet" type="text/css" media="all" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" media="all" href="/web/assets/vinnymoreira/stellarnav/css/stellarnav.css">
+<link rel="stylesheet" type="text/css" media="all" href="/web/bundles/AppBundle/Resources/css/simpleLayout.css">
+{% endblock %}				
 									
 		{% block javascript %}
-		
-		{% endblock %}
-	</head>
-	<body id="simpleLayout">		
-	{% block body %}
-	
-	{% endblock %}
-        <footer class="fixed">
-			
-		</footer>
-	</body>
+<script type="text/javascript" src="/web/assets/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="/web/assets/vinnymoreira/stellarnav/js/stellarnav.js"></script>
+<script type="text/javascript">
+	jQuery(document).ready(function($) {
+	jQuery('.stellarnav').stellarNav({
+	theme     : 'plain',
+	breakpoint: 980,
+	phoneBtn: false,
+	locationBtn: false,
+	sticky     : false,
+	position: 'top',
+	showArrows: false,
+	closeBtn     : false,
+	scrollbarFix: false
+});
+    
+    
+    
+    
+	});
+</script>
+{% endblock %}
+<style>
+.stellarnav > ul > li.butterfly.hover {
+	border-color: #898989;
+}
+.butterfly .image {
+	display:block;
+	margin:0;
+	position:absolute;
+	width:90px;
+	bottom:-15px;
+}
+.butterfly_text {
+	margin: 0;
+	position: absolute;
+	bottom: -9px;
+	right: 0px;
+	font-size:27px;
+	font-weight:bold;
+	color:#f80207;
+	text-shadow: 	2px 0px 5px rgba(0, 0, 0, 1),  -2px 5px 5px rgba(0, 0, 0, 1),  0px 2px 5px rgba(0, 0, 0, 1),  0px -2px 5px rgba(0, 0, 0, 1);
+	text-transform:uppercase;
+	font-family:roboto;
+}
+.content_container{
+text-align:center;
+}
+.slider_home{
+height:617px;
+width:80%;
+background:#CCC;
+margin:0 auto;
+}
+</style>
+</head>
+
+<body id="simpleLayout">
+
+<header> </header>
+<section id="content"> <br />
+  <div class="stellarnav" style="position:relative">
+    <ul>
+      <li class="butterfly"><a href="#">
+        <div style="position:relative; width:230px"> <img class="image" src="/web/bundles/AppBundle/Resources/img/butterfly.png" >
+          <div class="butterfly_text">зовнішня<br>
+            реклама</div>
+        </div>
+        </a> </li>
+      <li><a href="#">Широкоформатний<br>
+        друк</a>
+        <ul>
+          <li><a href="#">Item 1</a>
+            <ul>
+              <li><a href="#">Item 2</a>
+                <ul>
+                  <li><a href="#">Item 3</a></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li><a href="#">Item 1</a></li>
+        </ul>
+      </li>
+      <li><a href="#">Плотерна<br>
+        порізка</a></li>
+      <li><a href="#">Оплата<br>
+        доставка</a></li>
+      <li><a href="#" >
+        <div style="margin-bottom:11px">Контакти</div>
+        </a></li>
+    </ul>
+  </div>
+  <div class="content_container">
+	  <div class="slider_home">sd</div>
+        <div class="content"></div>
+  </div>
+  
+  <br />
+  <br />
+  {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %} <br />
+  <br />
+  You {{ app.user.username }} <a href="{{ path("logout") }}">[{% trans %}logout{% endtrans %}]</a> <br />
+  <br />
+  &nbsp;
+  {% endif %}		
+  {% block body %}
+  
+  {% endblock %} </section>
+<footer class="fixed"> </footer>
+</div>
+</body>
 </html>
