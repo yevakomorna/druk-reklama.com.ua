@@ -21,7 +21,7 @@
 	jQuery(document).ready(function($) {
 	jQuery('.stellarnav').stellarNav({
 	theme     : 'plain',
-	breakpoint: 980,
+	breakpoint: 760,
 	phoneBtn: false,
 	locationBtn: false,
 	sticky     : false,
@@ -30,62 +30,51 @@
 	closeBtn     : false,
 	scrollbarFix: false
 });
+
     
+          function setbodyclass() {
+      			
+                var browserWidth = window.innerWidth;
+                                
+                if  (browserWidth >= 1280) {
+                	$('body').attr('class', 'body_width_1920');
+                } else if (browserWidth < 1280 && browserWidth >= 760 ) {
+                	$('body').attr('class', 'body_width_1280');
+               	} else if (browserWidth < 760 ) {
+                	$('body').attr('class', 'body_width_760');
+                } 
+        }
+        setbodyclass();
+$( window ).resize(function() {
+        	
+  setbodyclass();
+});
+  });  
     
-    
-    
-	});
+	
 </script>
 {% endblock %}
-<style>
-.stellarnav > ul > li.butterfly.hover {
-	border-color: #898989;
-}
-.butterfly .image {
-	display:block;
-	margin:0;
-	position:absolute;
-	width:90px;
-	bottom:-15px;
-}
-.butterfly_text {
-	margin: 0;
-	position: absolute;
-	bottom: -9px;
-	right: 0px;
-	font-size:27px;
-	font-weight:bold;
-	color:#f80207;
-	text-shadow: 	2px 0px 5px rgba(0, 0, 0, 1),  -2px 5px 5px rgba(0, 0, 0, 1),  0px 2px 5px rgba(0, 0, 0, 1),  0px -2px 5px rgba(0, 0, 0, 1);
-	text-transform:uppercase;
-	font-family:roboto;
-}
-.content_container{
-text-align:center;
-}
-.slider_home{
-height:617px;
-width:80%;
-background:#CCC;
-margin:0 auto;
-}
-</style>
-</head>
-
-<body id="simpleLayout">
-
+<style></style>
+</head><body id="simpleLayout" class="" >
 <header> </header>
-<section id="content"> <br />
-  <div class="stellarnav" style="position:relative">
+
+<div class="header_panel" >
+	<div class="panel_left"><a href="{{ path("category", {'category_name':'about'}) }}">Про компанію</a> <a href="{{ path("category", {'category_name':'about'}) }}">FAQ</a></div>
+	<div class="panel_right">
+		<a class="red_linc_button" href="{{ path("category", {'category_name':'prices'}) }}">Прайси</a>
+	</div>
+    <div class="clear_both"></div>
+</div>
+<div id="content">
+  <div class="stellarnav" >
     <ul>
-      <li class="butterfly"><a href="#">
-        <div style="position:relative; width:230px"> <img class="image" src="/web/bundles/AppBundle/Resources/img/butterfly.png" >
+      <li class="butterfly"><a href="{{ path("home") }}">
+        <div style="position:relative; width:313px"> <img class="image" src="/web/bundles/AppBundle/Resources/img/butterfly.png" >
           <div class="butterfly_text">зовнішня<br>
             реклама</div>
         </div>
         </a> </li>
-      <li><a href="#">Широкоформатний<br>
-        друк</a>
+      <li><a class="a_width_241" href="{{ path("category", {'category_name':'large_format_printing'}) }}">Широкоформатний друк</a>
         <ul>
           <li><a href="#">Item 1</a>
             <ul>
@@ -99,32 +88,27 @@ margin:0 auto;
           <li><a href="#">Item 1</a></li>
         </ul>
       </li>
-      <li><a href="#">Плотерна<br>
-        порізка</a></li>
-      <li><a href="#">Оплата<br>
-        доставка</a></li>
-      <li><a href="#" >
+      <li><a href="{{ path("category", {'category_name':'cutting_plotter'}) }}" class="a_width_140">Плотерна порізка</a></li>
+      <li><a href="{{ path("category", {'category_name':'payment_delivery'}) }}" class="a_width_140">Оплата доставка</a></li>
+      <li><a href="{{ path("category", {'category_name':'contacts'}) }}" class="a_width_140" >
         <div style="margin-bottom:11px">Контакти</div>
         </a></li>
     </ul>
+    <div class="menu_bottom_line" ></div>
   </div>
   <div class="content_container">
-	  <div class="slider_home">sd</div>
-        <div class="content"></div>
+    <div class="slider_home">sd</div>
+    <div class="main_block"> {% block body %}
+      
+      {% endblock %} </div>
   </div>
-  
-  <br />
-  <br />
-  {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %} <br />
-  <br />
-  You {{ app.user.username }} <a href="{{ path("logout") }}">[{% trans %}logout{% endtrans %}]</a> <br />
-  <br />
-  &nbsp;
-  {% endif %}		
-  {% block body %}
-  
-  {% endblock %} </section>
-<footer class="fixed"> </footer>
 </div>
+<div class="bootom_bacground"></div>
+<footer class="fixed"> </footer>
+{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
+<div class="admin_lincs"> 
+  You <b>{{ app.user.username }}</b> <a href="{{ path("logout") }}">[{% trans %}logout{% endtrans %}]</a> <br />
+
+{% endif %}
 </body>
 </html>
