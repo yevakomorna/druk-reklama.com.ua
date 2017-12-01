@@ -56,14 +56,10 @@ $( window ).resize(function() {
 {% endblock %}
 <style></style>
 </head><body id="simpleLayout" class="" >
-<header> </header>
-
 <div class="header_panel" >
-	<div class="panel_left"><a href="{{ path("category", {'category_name':'about'}) }}">Про компанію</a> <a href="{{ path("category", {'category_name':'about'}) }}">FAQ</a></div>
-	<div class="panel_right">
-		<a class="red_linc_button" href="{{ path("category", {'category_name':'prices'}) }}">Прайси</a>
-	</div>
-    <div class="clear_both"></div>
+  <div class="panel_left"><a href="{{ path("category", {'category_name':'about'}) }}">Про компанію</a> <a href="{{ path("category", {'category_name':'about'}) }}">FAQ</a></div>
+  <div class="panel_right"> <a class="red_linc_button" href="{{ path("category", {'category_name':'prices'}) }}">Прайси</a> </div>
+  <div class="clear_both"></div>
 </div>
 <div id="content">
   <div class="stellarnav" >
@@ -97,18 +93,27 @@ $( window ).resize(function() {
     <div class="menu_bottom_line" ></div>
   </div>
   <div class="content_container">
-    <div class="slider_home">sd</div>
+    <div class="slider_home"></div>
     <div class="main_block"> {% block body %}
       
       {% endblock %} </div>
+    <div class="foter_panel">
+      <div class="panel_left"> <a href="{{ path("home") }}" class="butterfly">         <img class="image" src="/web/bundles/AppBundle/Resources/img/butterfly.png" >          <span class="butterfly_text">зовнішня<br>            реклама</span>               </a> 
+    <a href="{{ path("category", {'category_name':'about'}) }}">Про компанію</a> 
+      <a href="{{ path("category", {'category_name':'about'}) }}">FAQ</a>
+      
+
+            
+      </div>
+      <div class="panel_right"> <a class="red_linc_button" href="{{ path("category", {'category_name':'prices'}) }}">Прайси</a> </div>
+      <div class="clear_both"></div>
+    </div>
   </div>
 </div>
 <div class="bootom_bacground"></div>
-<footer class="fixed"> </footer>
 {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
-<div class="admin_lincs"> 
-  You <b>{{ app.user.username }}</b> <a href="{{ path("logout") }}">[{% trans %}logout{% endtrans %}]</a> <br />
-
+<div class="admin_lincs">
+You <b>{{ app.user.username }}</b> <a href="{{ path("logout") }}">[{% trans %}logout{% endtrans %}]</a> <br />
 {% endif %}
 </body>
 </html>

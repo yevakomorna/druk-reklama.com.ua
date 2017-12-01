@@ -4,6 +4,18 @@ background:url( '/web/bundles/AppBundle/Resources/img/background_black_opacity_7
 font-family:roboto;
 }
 
+.red_linc_button {
+display:block;
+border:2px solid #ff0500;
+border-radius:17px;
+float:right;
+text-decoration:none;
+padding:4px 15px;
+color:#ff0500;
+font-weight:bold;
+}
+
+
 .stellarnav {
 min-width:1032px;
 margin-top:3px;
@@ -236,7 +248,7 @@ border-radius:4px 4px 4px 4px;
 border:solid 1px;
 z-index:10000000;
 }
-
+/* BEGIN header_panel */
 .header_panel,#simpleLayout.body_width_1920 .header_panel {
 padding:9px 20px 9px 156px;
 background:white;
@@ -253,7 +265,7 @@ padding:9px 10px 9px 2px;
 .header_panel .panel_left {
 float:left;
 color:#5a5a5a;
-margin: 5px 0px 0px 0px;
+margin:5px 0px 0px 0px;
 }
 
 .header_panel .panel_left a {
@@ -263,22 +275,64 @@ font-size:15px;
 font-weight:bold;
 margin:0px 0px 0px 40px;
 }
+/* END header_panel */
+
+/* BEGIN foter_panel */
+.foter_panel, #simpleLayout.body_width_1920 .foter_panel {
+padding:23px 20px;
+background-color: rgba(255, 255, 255, 0.07);
+}
+
+#simpleLayout.body_width_1280 .foter_panel {
+
+}
+
+#simpleLayout.body_width_760 .foter_panel {
+
+}
+
+.foter_panel .panel_left {
+float:left;
+color:white;
+margin:5px 0px 0px 0px;
+}
+
+.foter_panel .panel_left a {
+text-decoration:none;
+color:white;
+font-size:15px;
+font-weight:bold;
+margin:0px 0px 0px 40px;
+display: block;
+float: left;
+}
+
+.foter_panel .red_linc_button{
+background: white;	
+}
+
+.foter_panel .panel_left a.butterfly {
+	display: block;
+	position: relative;
+	width: 240px; 
+	margin: -23px 0px 0px 0px;
+}
+
+.foter_panel .butterfly .image {
+	width: 60px;
+	position: relative;
+	margin: 0px 0px -6px 0px;
+}
+.foter_panel .butterfly_text{
+	font-size: 20px;
+	line-height: 103%;
+}
+/* END foter_panel */
 
 .clear_both {
 clear:both;
 }
 
-.panel_right{
-float: right;	
-}
-
-.red_linc_button{
-	display: block;
-border: 2px solid #ff0500;
-border-radius: 17px;
-float: right;	
-text-decoration: none;
-padding: 4px 15px;
-color: #ff0500;
-font-weight: bold;
+.panel_right {
+float:right;
 }
