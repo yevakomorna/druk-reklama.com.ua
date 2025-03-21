@@ -1,12 +1,22 @@
 <?php
-
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Debug\Debug;
 
-require __DIR__.'/../vendor/autoload.php';
+require __dir__ . '/../vendor/autoload.php';
 
-Debug::enable();
-$kernel = new AppKernel('dev', true);
+$debugEnable = false;
+if (true || $_SERVER['SERVER_ADDR'] == '127.0.0.1') {
+    $environment = 'dev';
+    $debugEnable = true;
+} else {
+    $environment = 'prod';
+}
+
+if ($debugEnable) {
+    Debug::enable();
+}
+
+$kernel = new AppKernel($environment, $debugEnable);
 if (PHP_VERSION_ID < 70000) {
     $kernel->loadClassCache();
 }

@@ -17,7 +17,7 @@ class BaseDAO extends EntityRepository {
 		$this->em->flush();
 	}
 
-	public function saveAll(array $objects) {
+	public function saveAll($objects) {
 		foreach ($objects as $object){
 			$this->save($object);
 		}
@@ -28,7 +28,7 @@ class BaseDAO extends EntityRepository {
 		$this->em->flush();				
 	}
 
-	public function deleteAll(array $objects) {
+	public function deleteAll($objects) {
 		foreach ($objects as $object){
 			$this->delete($object);
 		}

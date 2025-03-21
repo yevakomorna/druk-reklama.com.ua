@@ -1,0 +1,7 @@
+Для оновлення на слабих машинах
+
+but just so you know, you typically should run update on
+your machine, then commit/deploy the composer.lock file and only run
+install on your server to sync up the dependencies with the lock file,
+to make sure you only get stuff you tested properly. That way you can
+also run a server with low memory without any problems.

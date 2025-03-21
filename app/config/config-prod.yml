@@ -6,11 +6,14 @@ framework:
 doctrine:
     dbal:
         driver: pdo_mysql
-        host: dstepa00.mysql.ukraine.com.ua
+        host: 127.0.0.1
         port: null
-        dbname: dstepa00_av
-        user: dstepa00_av
-        password: m4uuh6bk
-        charset: UTF8
+        dbname: shop_db
+        user: shop_db
+        password: ohhDOyD75c
+        charset: utf8mb4
         logging: true
-        
+swiftmailer:
+    transport: sendmail                   
+    host: localhost
+    disable_delivery: false        

@@ -29,6 +29,8 @@
         "sensio/framework-extra-bundle": "*",
         "doctrine/orm": "*",
         "doctrine/doctrine-bundle": "*",
+        "stof/doctrine-extensions-bundle": "*",
+        "simettric/doctrine-translatable-form-bundle": "*",
         "jms/di-extra-bundle": "1.8.*",
         "symfony/swiftmailer-bundle": "*",
         "symfony/yaml": "*",
@@ -37,10 +39,18 @@
         "sensio/distribution-bundle": "^5.0.19",
         "helios-ag/fm-elfinder-bundle": "~6",
         "egeloen/ckeditor-bundle": "*",
+        "egeloen/google-map-bundle": "*",
         "symfony/finder": "*",
         "twitter/bootstrap-bundle": "*",
-        "vinnymoreira/stellarnav": "*"
-                  
+        "vinnymoreira/stellarnav": "*",
+        "kenwheeler/slick": "^1.6.1",
+        "knplabs/knp-paginator-bundle": "2.*",
+        "liip/imagine-bundle": "1.9.*",
+        "oneup/uploader-bundle": "*",
+        "moxiecode/plupload": "2.3.6",
+        "friendsofsymfony/user-bundle": "^2.1",
+        "nicolab/php-ftp-client": "^1.4"
+        
     },
     "scripts": {
         "symfony-scripts": [

@@ -1,0 +1,22 @@
+{% extends 'default/simple_layout.html' %}
+
+{% block tag_content %}
+<div id="content" class="contacts" > 
+{% endblock %}
+
+{% block slider_home %}
+    <div class="slider_home min_height" >
+    
+    {% if is_granted('ROLE_ADMIN') %}<div style="background: white;"> <a href="{{ path("edit_category", {"category_name": data.category.name} ) }}">[{% trans %}admin.edit{% endtrans %}]</a> <br /></div>{% endif %}
+    <div class="contacts_in_slider"  >
+    {{data.category.getDescriptionI18n(app.request.locale)|raw}}
+    </div>
+    </div>
+  {% endblock %}  
+
+{% block body %}
+<div class="">
+{{ ivory_google_map(data.map) }}
+{{ ivory_google_api([data.map]) }}
+</div>
+{% endblock %}

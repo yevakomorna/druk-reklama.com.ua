@@ -1,0 +1,77 @@
+{% extends 'default/admin/admin_layout.html' %}
+  
+  {% block body %}
+  {% if form %}
+<div class="admin_form_edit_wrap"> {% form_theme form 'bootstrap_3_layout.html.twig' %}
+  <h5>{{form_name}}</h5>
+  {{ form_start(form) }}
+  
+  {{ form_row(form.titleUa) }}
+  {{ form_row(form.status) }}
+  {%if form.params|length > 0 %}
+  <div><br />
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tree_admin">
+      <tr>
+        <td colspan="4" align="center" valign="middle">Параметри</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>назва</td>
+        <td>значення</td>
+        <td>опис</td>
+      </tr>
+      {% for param in form.params %}
+      <tr>
+        <td>{{loop.index}}.  </td>
+        <td>{{ form_widget(param.name) }}</td>
+        <td>{{ form_widget(param.value) }}</td>
+        <td>{{ form_widget(param.description) }}</td>
+      </tr>
+      
+      {% endfor %}
+    </table><br />
+  </div>
+	{% endif %}  
+  {{ form_end(form) }} </div>
+{% endif %}
+
+    {% if form_move %}
+<div class="admin_form_edit_wrap"> {% form_theme form_move 'bootstrap_3_layout.html.twig' %}
+  <h5>{{form_name_2}}</h5>
+  {{ form_start(form_move) }}
+  {{ form_widget(form_move) }}
+  {{ form_end(form_move) }} </div>
+{% endif %}
+
+    {% if form_2 %}
+<div class="admin_form_edit_wrap"> {% form_theme form_2 'bootstrap_3_layout.html.twig' %}
+  <h5>{{form_name_2}}</h5>
+  {{ form_start(form_2) }}
+  {{ form_widget(form_2) }}
+  {{ form_end(form_2) }} </div>
+{% endif %}
+
+
+
+<div style="clear:both"></div>
+<h3>Додаткові послуги</h3>
+<table cellpadding="0" cellspacing="0" class="tree_admin" >
+  {% set counter = 1 %}
+  {% for treeElement in treeElements %}
+  <tr class="{% if loop.index is odd%}tr_odd{% else %}tr_even{% endif %} {% if elementID == treeElement.id %}tr_curent_edit{% endif %}"> {% set padding_left = treeElement.lvl*18 %}
+    {% if treeElement.lvl == 1 %}
+    {% set fontBold = 'font-weight:bold' %}
+    {% set counterLoc = counter ~ '. ' %}
+    {% set counter = counter + 1 %}
+    {% else %}
+    {% set fontBold = '' %}
+    {% set counterLoc = '' %}
+    {% endif %}
+    <td style="padding-left:{{padding_left}}px; {{fontBold}}" >{{counterLoc}}{{treeElement.getTitleI18n(app.request.locale)}}</td>
+    <td nowrap="nowrap" class="action_lincs" > {% if loop.index > 1 %} <a href="{{ path(redirectRoute, {'mode':'edit','element_id':treeElement.id}) }}" title="{% trans %}admin.edit{% endtrans %}"><img src="/web/img/admin/buttons/edit.gif" /></a> <a href="{{ path(redirectRoute, {'mode':'move','element_id':treeElement.id}) }}" title="{% trans %}admin.move{% endtrans %}"><img src="/web/img/admin/buttons/move.gif" /></a> <a href="{{ path(redirectRoute, {'mode':'dellete','element_id':treeElement.id}) }}" title="{% trans %}admin.dellete{% endtrans %}" onClick="if (confirm('Справді видалити?')){}else{return false;}" ><img src="/web/img/admin/buttons/dell.gif" /></a>&nbsp;&nbsp;&nbsp;
+      {% endif %} <a href="{{ path(redirectRoute, {'mode':'add','element_id':treeElement.id}) }}" title="{% trans %}admin.addSubmenu{% endtrans %}"  ><img src="/web/img/admin/buttons/add.gif" /></a></td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %} 

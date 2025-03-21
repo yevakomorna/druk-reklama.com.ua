@@ -1,0 +1,522 @@
+{% extends 'default/simple_layout.html' %}
+
+{% block tag_content %}
+<div id="content" class="order" >
+{% endblock %}
+
+{% block slider_home %}
+<div class="slider_home min_height" >
+<div class="order_text_top" >
+<div class="order_text_top_h1" >
+Оформлення онлайн замовлення
+</div>
+
+<div class="order_text_top_more_info" >
+{{data.category.getDescriptionTwoI18n(app.request.locale)|raw}}
+</div>
+
+<div class="order_text_top_path" >
+            {{data.category.getParent().getParent().getTitleI18n(app.request.locale)}}<br />
+            {{data.category.getParent().getTitleI18n(app.request.locale)}}<br />
+            {{data.category.getTitleI18n(app.request.locale)}}<br />
+</div>
+
+</div>
+
+</div>
+{% endblock %}  
+
+{% block body %}
+<div class="main_block order_main1">
+{% if is_granted('ROLE_ADMIN') %}
+<div style="background: white;"> <a href="{{ path("edit_category", {"category_name": data.category.name} ) }}">[{% trans %}admin.edit{% endtrans %}]</a> <br />
+</div>
+{% endif %}
+<div class="order_bolk_wrap">
+  <div class="order_stage stage_one" {% if data.currentOrder.model %} style="display: none;" {% endif %} > {{data.category.getDescriptionI18n(app.request.locale)|raw}}
+  <div class="tapeWidth class_hiden" >Максимальна ширина друку --tapeWidthplaceholder--мм  поділіть зображення на частини або доручіть це зробити нам — напишіть про це в коментарі до замовлення</div>
+    <script type="text/javascript" src="/web/lib/js/plupload/js/plupload.full.min.js"></script>
+    <script type = "text/javascript">
+    
+    var tapeWidthText = '';
+    var orderService = [{% if data.currentOrder.orderService %}{{data.currentOrder.getOrderServicesID}}{% endif %}];
+    var tapeWidth = {% if data.category.tapeWidth %} {{data.category.tapeWidth}} {% else %} 0 {% endif %};
+    
+$(document).ready(function() {
+    
+    if (tapeWidth > 0) {
+       tapeWidthText = $(".tapeWidth").html();
+       tapeWidthText = tapeWidthText.replace('--tapeWidthplaceholder--', tapeWidth);
+    }
+    
+        var uploader = new plupload.Uploader({
+                runtimes: "html5",
+                url: "{{ oneup_uploader_endpoint('gallery') }}",
+                max_file_size: "20mb",
+                multipart: true,
+                multi_selection: false,
+                unique_names: true,
+                filters: [{
+                        title: "Image files",
+                        extensions: "tif,tiff,cdr"
+                }],
+                drop_element: "upload_button",
+                browse_button: "upload_button"
+        });
+        uploader.bind("FilesAdded", function(uploader, files) {
+                $("#upload_button").hide();
+                $("#myProgress").show();
+                $('.order_loading_img').show();
+                uploader.start();
+        });
+        uploader.bind("UploadProgress", function(uploader, file) {
+                $('#myBarPersent').html(file.percent + '%');
+                var myBarWidth = (file.percent == 100) ? 99 : file.percent;
+                $('#myBar').css('width', myBarWidth + '%');
+        });
+        uploader.bind("FileUploaded", function(uploader, file, response) {
+                var res = $.parseJSON(response.response);
+                //console.log(file);
+                $(".stage_one").hide();
+                $(".stage_two").show();
+                if (file.type == "image/tiff") {
+                        var new_img = $('<img>');
+                        new_img.attr('src', res.path);
+                        new_img.attr('class', 'order_img');
+                        new_img.on('load', function() {
+                                $('.order_loading_img').hide();
+                                $('.order_img_wrap').append(new_img);
+                                $(".img_format_ext").html("TIFF");
+                        });
+                } else {
+                        $(".img_format_ext").html("CDR");
+                        $('.order_loading_img').hide();
+                        $('.order_cdr_error').show();
+                }
+        });
+        uploader.bind("Error", function(uploader, args) {
+                //console.log('[Error] ', args);
+        });
+        uploader.init();
+        $('.main_checkbox').change(function() {
+                var child_block = $(this).parent().parent().find('.form_checkbox_level_1');
+                var action = $(this).is(':checked');
+                checkbox_colored_change($(this).parent(), action);
+                var checkbox_to_act = action ? 'first' : 'checked';
+                child_block.find('.child_checkbox:' + checkbox_to_act).each(function(i) {
+                        $(this).prop('checked', action);
+                        checkbox_colored_change($(this).parent(), action);
+                });
+        });
+        $('.child_checkbox').change(function() {
+                var this_obj = $(this);
+                var parent_checkbox = this_obj.closest('.form_checkbox_group').find('.main_checkbox');
+                var action = this_obj.is(':checked');
+                var in_grop_checked = false;
+                parent_checkbox.parent().parent().find(".child_checkbox:checked").each(function(i) {
+                        $(this).prop('checked', false);
+                        checkbox_colored_change($(this).parent(), false);
+                });
+                parent_checkbox.each(function(i) {
+                        $(this).prop('checked', action);
+                        checkbox_colored_change($(this).parent(), action);
+                });
+                this_obj.prop('checked', action);
+                checkbox_colored_change(this_obj.parent(), action);
+        });
+
+        function checkbox_colored_change(obj, action) {
+                if (action) {
+                        obj.addClass('checked');
+                } else {
+                        obj.removeClass('checked');
+                }
+        }
+        
+        for (i in orderService) {
+            action = true;
+            
+            this_obj = $('[name="additional_service_item['+orderService[i]+']"]');
+            this_obj.prop('checked', action);
+            checkbox_colored_change(this_obj.parent(), action);
+            
+            this_obj = $('[name="additional_service['+orderService[i]+']"]');
+            this_obj.prop('checked', action);
+            checkbox_colored_change(this_obj.parent(), action);
+        }
+ 
+    function tapeWidthCheck() {
+        if (tapeWidth == 0) {
+            return true;
+        }
+        var width = $("#set_maket_size_w").val();
+        var height = $("#set_maket_size_h").val();
+        if (!width || !height) {
+            return false;
+        }
+        var max = (width > height) ? height : width;
+        //console.log('max: '+max);
+        if (max > tapeWidth) {
+            alert(tapeWidthText);
+            return false;
+        }  
+    }   
+        
+    $("#set_maket_size_w, #set_maket_size_h").change(function() {
+       tapeWidthCheck(); 
+    });    
+    
+    $(".order_img_wrap").hover(function() {
+        $(".order_dell_img").show();
+    },function() {
+        $(".order_dell_img").hide();
+    });
+    
+    $(".order_dell_img").click(function (){
+        var this_obj = $(this);
+        $('.order_loading_img').show();
+        this_obj.hide();
+        $('.order_img').hide();
+                $.post('{{ path("order_dell_img") }}', {
+                    
+                }, function(resp) {
+                    console.log(resp);
+                    if (resp && resp.status == "ok") {
+                        $("#upload_button").show();
+                        $("#myProgress").hide();
+                
+                        $('.stage_two').hide();
+                        $('.stage_one').show();
+                    } else {
+                        this_obj.show();
+                        $('.order_img').show();
+                        $('.order_loading_img').hide();
+                        alert('error');
+                    } 
+                },"json");
+       
+        
+    });
+       $(".send_order_form").click(function (){
+        $(".order_loading_send img").show();
+            $.post( '{{ path("order_add") }}', $( "#stage_two_form").serialize(), function(){
+                        location.href = '{{ path("category", {"category_name": "order_confirm"} ) }}';
+            });
+       });
+        
+}); 
+</script>
+    <style>
+    
+.order_text_top {
+    margin: 10% 0 0 20%;
+    position: absolute;
+    color: white; 
+}
+.order_text_top_h1 {
+    font-size: 50px;
+    text-transform: uppercase;
+}
+
+.order_text_top_path, .order_text_top_more_info {
+    font-size: 24px;
+    color: white;
+    text-align: left;
+    margin: 20px 0px 0px 75px;
+    line-height: 130%;
+}
+
+.order_text_top_path{
+    margin-top: 7px;
+}    
+    
+.order_main{
+    text-align: left;
+  }
+.order_bolk_wrap {
+    margin:0 auto; width:909px;
+    text-align: left;
+}  
+#myProgress {
+    position: relative;
+    width: 100%;
+    height: 20px;
+    margin-top: 15px;
+	border: solid 2px black;
+	padding: 1px 2px;
+	border-radius: 6px;
+	overflow:hidden;
+	display:none;
+}
+
+#myBar {
+    position: absolute;
+    width: 1%;
+    height: 84%;
+    background-color: #00aced;
+	border-radius: 5px;
+	border: 1px solid #7ed5f5;
+}
+#myBarPersent{
+    position: absolute;
+    left: 44%;
+    z-index: 100;
+}
+.upload_button_block {
+	width:235px;
+    margin-top: 15px;
+	display: inline-block;
+}
+#upload_button {
+	position: relative;
+    width: 100%;
+    height: 20px;
+	background:#605d5c;
+	padding: 3px 3px;
+	border-radius: 9px;
+	overflow:hidden;
+	cursor:pointer;
+	color:#FFF;
+    text-align: center;
+}
+
+.gray_button {
+	position: relative;
+    height: 20px;
+	background:#605d5c;
+	padding: 5px 30px;
+	border-radius: 10px;
+	overflow:hidden;
+	cursor:pointer;
+	color:#FFF;
+    display: inline-block;
+}
+
+.order_stage {
+display:inline-block;
+min-width:909px;
+}
+
+.stage_two {
+display:none;
+}
+.order_left_block, .order_right_block {
+display:inline-block;
+width: 49%;
+vertical-align:top;
+}
+.order_right_block{
+    margin: 35px 0px 0px 0px;
+}
+.form_checkbox_group input, .checkbox_group_item input{
+visibility:hidden;	
+}
+.form_adittionl_services {
+text-align: left;
+}
+.form_checkbox_level_1{
+	margin: 0 0 0 36px;
+	padding: 0;
+}
+.main_checkbox_group {
+background-image:url('/web/img/small_element/chakbox_siricle_medium.png');
+background-repeat:no-repeat;
+padding:0 0 0 20px;
+background-position:left 3px;
+}
+
+.checkbox_group_item {
+background-image:url('/web/img/small_element/chakbox_siricle_small.png');
+background-repeat:no-repeat;
+padding:0 0 0 15px;
+background-position:left center;
+}
+.main_checkbox_group.checked{
+background-image:url('/web/img/small_element/chakbox_siricle_medium_checked.png');
+color:#F00;
+}
+.checkbox_group_item.checked{
+background-image:url('/web/img/small_element/chakbox_siricle_small_checked.png');
+color:#F00;
+}
+
+
+
+
+.clear_inline_block{
+	height:1px;
+	width:100%;
+}
+.red_text{
+color:#F63;
+}
+.img_info_label, .img_info_val{
+float:left;
+
+}
+.img_info_label{
+margin:0px 6px 4px 0px;
+min-width:115px;
+}
+.clearBoth{
+	clear:both;
+}
+.set_maket_size{
+border-collapse:collapse;
+border:none;
+background:#CCC;
+width:54px;
+text-align: center;
+}
+.div_text_center{
+text-align:center;
+}
+.checkbox_numeration, .checkbox_lable_caption{
+display:inline-block;
+vertical-align:top;
+max-width:282px;
+}
+.checkbox_numeration {
+margin-right: 5px;
+}
+
+.order_thumbs {
+    margin: 6px 0px 6px 0px;
+    position: relative;
+}
+.order_thumbs img {
+    border: 1px solid gray;
+}
+.order_thumbs .order_dell_img{
+    position: absolute;
+    left: 6px;
+    top: 3px;
+    cursor: pointer;
+    display: none;
+}
+.order_thumbs .order_dell_img img {
+    border: none;
+}
+.order_thumbs .order_dell_img img:hover{
+    opacity: 0.8;
+}
+.order_h2 {
+    text-transform: uppercase;
+}
+.order_h3 {
+    margin: 0px 0px 8px 35px;
+}
+
+.order_footer {
+    margin: 50px 0px 0px 0px;
+}
+.order_header{
+    margin: 0px 0px 32px 0px;
+}
+.order_loading_img{
+background-image:url('/web/img/loaders/load_gray_48x48.gif');
+background-repeat:no-repeat;
+background-position:center center;
+width:345px;
+height:215px;
+display: none;
+}
+.order_loading_send{
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    vertical-align:top;
+    margin: 0 0 0 8px;
+}
+.order_loading_send img{
+    display: none;
+}
+.order_cdr_error {
+    display: none;
+    width: 285px;
+    height: 95px;
+    padding: 120px 30px 0px 30px;
+    color: red;
+    background-image:url('/web/img/no_foto_100.png');
+    background-repeat:no-repeat;
+    background-position:center 14px;
+    
+}
+</style>
+<div style="text-align:center">
+
+{% if is_granted('ROLE_USER') %}
+    <div class="upload_button_block">
+      <div id="upload_button">ЗАВАНТАЖИТИ МАКЕТ</div>
+    </div>
+    {% else %}
+        <a href="{{ path('fos_user_security_login') }}?_target_path={{ path("category", {"category_name": data.category.name} ) }}" >Для продовження увійдіть в акаунт</a>
+    {% endif %} 
+    
+      <div id="myProgress">
+        <div id="myBarPersent">100</div>
+        <div id="myBar"></div>
+      </div>
+    </div>
+    </div>
+    
+
+  <div class="clear_inline_block"></div>
+  <div class="order_stage stage_two" {% if data.currentOrder.model %} style="display: block;" {% endif %} >
+<form id="stage_two_form" >
+ <div class="div_text_center order_header"><h2 class="order_h2">Додаткові послуги</h2></div>
+    <div>
+      <div class="order_left_block">
+      	{% if data.additionalService %}
+        <h3 class="order_h3 red_text">Виберіть послуги:</h3>
+        <div class="form_adittionl_services">
+          {{data.additionalService|raw}}
+        </div>
+        {% endif %}
+      </div>
+      <div class="order_right_block">
+        <div class="img_format">Макет <span class="img_format_ext">{% if data.currentOrder.model %}{{data.currentOrder.getModelType()}}{% endif %}</span></div>
+        <div class="img_set_size">Вкажіть розмір в міліметрах
+          <input name="set_maket_size_w" id="set_maket_size_w"  class="set_maket_size" placeholder="ширина" title="ширина" value="{{data.currentOrder.modelWidth}}" /> x
+          <input name="set_maket_size_h" id="set_maket_size_h"  class="set_maket_size" placeholder="висота" title="висота" value="{{data.currentOrder.modelHeight}}" />
+        </div>
+        <div class="order_thumbs">
+        <div class="order_img_wrap">
+            <div class="order_dell_img"><img src="/web/img/small_element/dell_red.gif" /></div>
+            {% if data.currentOrder.model %}
+            <img class="order_img" src="{{ data.currentOrder.getModelWebPuth() | imagine_filter('order_tiff') }}" />
+            {% endif %}
+        </div>
+		<div class="order_loading_img"></div>
+        <div class="order_cdr_error">попередній перегляд доступний тільки для формату TIFF</div>
+        
+         </div>
+        <div>
+          <div class="img_info_label" >Якість друку: </div>
+          <div class="img_info_val" ><span class="red_text">{{data.category.getParent().getParent().getTitleI18n(app.request.locale)}}</span> </div>
+          <div class="clearBoth"></div>
+        </div>
+        <div >
+          <div class="img_info_label" >Матеріал: </div>
+          <div class="img_info_val" > <span class="red_text">{{data.category.getParent().getTitleI18n(app.request.locale)}}<br />
+            {{data.category.getTitleI18n(app.request.locale)}} </span> </span></div>
+          <div class="clearBoth"></div>
+        </div>
+        
+           
+        
+      </div>
+      <div class="div_text_center order_footer">
+      <input type="hidden" name="order_category" value="{{data.category.id}}" id="order_category" />
+      <div class="gray_button send_order_form">ОФОРМИТИ ЗАМОВЛЕННЯ</div><div class="order_loading_send"> <img src="/web/img/loaders/load_gray_32x32.gif" /></div> 
+      
+      </div>
+    </div>
+   </form>
+  </div>
+  
+  
+    </div>
+</div>
+</div>
+{% endblock %}

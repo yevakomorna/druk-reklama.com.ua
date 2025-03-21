@@ -1,0 +1,17 @@
+#[common]
+common.logout: вихід
+common.sitename_1: зовнішня
+common.sitename_2: реклама
+#[admin]
+admin.you: Ви
+admin.editMainSlider: Слайдер
+admin.editTree: Структура
+admin.add: додати
+admin.edit: редагувати
+admin.dellete: видалити
+admin.elementDellNotExist: Даного елементу не існує
+admin.active: активний
+admin.hidden: прихований
+admin.addSubmenu: додати підменю
+admin.move: перемістити
+admin.additionalService: Додаткові послуги

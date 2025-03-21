@@ -1,0 +1,15 @@
+[composer]
+# оновити проект
+cmd /k /server/xampp/7.0.8/php/php bin/composer/composer.phar update -v
+#
+cmd /k /server/xampp/7.0.8/php/php bin/composer/composer.phar require  makeusabrew/bootbox
+
+[console]
+# сервіси
+cmd /k /server/xampp/7.0.8/php/php bin/console debug:config
+# шляхи 
+cmd /k /server/xampp/7.0.8/php/php bin/console debug:router
+# оновити базу даних з моделей
+cmd /k /server/xampp/7.0.8/php/php bin/console doctrine:schema:update --force
+# видалити кеш
+cmd /k /server/xampp/7.0.8/php/php bin/console cache:clear 

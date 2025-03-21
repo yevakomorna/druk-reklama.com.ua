@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /UNDER/
+Disallow: /diody/
+Disallow: /SAUT/
+Disallow: /D/
+Host: https://z-reklama.lviv.ua

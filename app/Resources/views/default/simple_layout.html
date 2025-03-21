@@ -7,16 +7,24 @@
 <meta charset="utf-8">
 <meta name="description" content="">
 <meta name="keywords" content="">
-<link rel="icon" type="image/ico" href="/web/image/favicon.ico"/>
+<link rel="icon" type="image/ico" href="/web/img/favicon.ico"/>
 {% block css %}
+<link rel="stylesheet" type="text/css" media="all" href="/web/bundles/twitterbootstrap/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" media="all" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" media="all" href="/web/assets/vinnymoreira/stellarnav/css/stellarnav.css">
-<link rel="stylesheet" type="text/css" media="all" href="/web/bundles/AppBundle/Resources/css/simpleLayout.css">
+<link rel="stylesheet" type="text/css" href="/vendor/kenwheeler/slick/slick/slick.css"/>
+<link rel="stylesheet" type="text/css" href="/vendor/kenwheeler/slick/slick/slick-theme.css"/>
+<link rel="stylesheet" href="/web/lib/js/Magnific-Popup-master/dist/magnific-popup.css">
+<link rel="stylesheet" type="text/css" media="all" href="/web/css/simpleLayout.css">
+<link rel="stylesheet" type="text/css" media="all" href="/web/css/flexBackground.css">
 {% endblock %}				
 									
 		{% block javascript %}
 <script type="text/javascript" src="/web/assets/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="/web/assets/vinnymoreira/stellarnav/js/stellarnav.js"></script>
+<script type="text/javascript" src="/vendor/kenwheeler/slick/slick/slick.js"></script>
+<script src="/web/lib/js/Magnific-Popup-master/dist/jquery.magnific-popup.js"></script>
+<script type="text/javascript" src="/web/bundles/twitterbootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 	jQuery(document).ready(function($) {
 	jQuery('.stellarnav').stellarNav({
@@ -49,71 +57,236 @@ $( window ).resize(function() {
         	
   setbodyclass();
 });
-  });  
+
+
+
+
+
+ $('.slider-for').slick({
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  arrows: false,
+  fade: true,
+  asNavFor: '.slider-nav',
+  initialSlide: 1,
+});
+ 
+$('.slider-nav').slick({
+  slidesToShow: 6,
+  slidesToScroll: 1,
+  arrows: false,
+  asNavFor: '.slider-nav-top',
+  dots: false,
+  centerMode: true,
+  focusOnSelect: true,
+  vertical: true,
+  verticalSwiping: true,
+  initialSlide: 0,
+  centerPadding: "3px",
+	responsive: [
+	{
+	  breakpoint: 1280,
+	  settings: {
+	    slidesToShow: 5
+	  }
+	}
+]
+});
+
+$('.slider-nav-top').slick({
+  slidesToShow: 6,
+  slidesToScroll: 1,
+  arrows: false,
+  asNavFor: '.slider-nav',
+  dots: false,
+  centerMode: true,
+  focusOnSelect: true,
+  vertical: true,
+  verticalSwiping: true,
+  initialSlide: 0,
+  centerPadding: "3px",
+  	responsive: [
+	{
+	  breakpoint: 1280,
+	  settings: {
+	    slidesToShow: 5
+	  }
+	}
+]
+  
+});
+
+var main_slider_left_top = parseInt($('.main_slider_left').css('margin-top'));
+var main_slider_right = parseInt($('.main_slider_rigth').css('margin-top'));
+
+$(window).on( 'scroll', function(){
+	var set_top = $(this).scrollTop() + main_slider_left_top;
+	$('.main_slider_left').css('margin-top', set_top);
+	
+	var set_top1 = $(this).scrollTop() + main_slider_right;
+	$('.main_slider_rigth').css('margin-top', set_top1);
+	
+   //console.log(set_top);
+});
+
+$(window).on( 'resize', function(){
+	$('.main_slider_left').css('margin-top','');
+	$('.main_slider_rigth').css('margin-top','');
+	
+ main_slider_left_top = parseInt($('.main_slider_left').css('margin-top'));
+ main_slider_right = parseInt($('.main_slider_rigth').css('margin-top'));
+  
+});
+
+
+
+
+
+
+
+
+$('.slider-nav-top').on('beforeChange', function(event, slick, currentSlide, nextSlide){
+
+  $('.slider-nav').slick('slickGoTo',(nextSlide),false);
+  
+});
+
+$('.slider-nav').on('beforeChange', function(event, slick, currentSlide, nextSlide){
+
+  $('.slider-nav-top').slick('slickGoTo',(nextSlide),false);
+  
+});
+
+
+$('.slider').each(function() { // the containers for all your galleries
+    $(this).magnificPopup({
+        delegate: 'a', // the selector for gallery item
+        type: 'image',
+        gallery: {
+          enabled:true,
+          tCounter: ""
+        }
+    });
+});
+
+
+
+
+ $('.slider-nav, .slider-nav-top').mouseover(function(e){
+	var _id =	$(this).attr('id');
+	
+	if (!slider_autoplay_obj['timers'][_id]) {
+		slider_autoplay_obj['timers'][_id] = false;
+	}
+
+   possititon = direction_slide($(this), e);
+    //console.log('possititon '+possititon );
+    if (possititon=='top') {
+    	clearInterval(slider_autoplay_obj['timers'][_id]);
+    	slider_autoplay_obj['timers'][_id] = setInterval( function(){
+    		$(".slider").slick('slickPrev');	
+    	},500);
+    	
+	} else {
+		clearInterval(slider_autoplay_obj['timers'][_id]);
+		slider_autoplay_obj['timers'][_id] = setInterval( function(){
+    		$(".slider").slick('slickNext');	
+    	},500);
+		
+	}
+    
+  });
+  
+  $('.slider-nav, .slider-nav-top').mouseout(function(e){
+  	var _id =	$(this).attr('id');
+	
+	if (slider_autoplay_obj['timers'][_id]) {
+		clearInterval(slider_autoplay_obj['timers'][_id]);
+	}	
+  	
+  });
+
+
+
+
+
+  });
+  
+var slider_autoplay_obj = {'timers':{}};  
+  
+  function direction_slide(obj, e) {
+      // положение элемента
+    var pos = obj.offset();
+    var elem_left = pos.left;
+    var elem_top = pos.top;
+    // положение курсора внутри элемента
+    var Xinner = e.pageX - elem_left;
+    var Yinner = e.pageY - elem_top;
+    //console.log("X: " + Xinner + " Y: " + Yinner); // вывод результата в консоль
+    var possititon = (obj.height()/2 - Yinner) > 0 ? 'top' : 'bottom';
+	return possititon;	
+  }  
     
 	
 </script>
 {% endblock %}
-<style></style>
-</head><body id="simpleLayout" class="" >
+</head>
+<body id="simpleLayout" class="" >
 <div class="header_panel" >
-  <div class="panel_left"><a href="{{ path("category", {'category_name':'about'}) }}">Про компанію</a> <a href="{{ path("category", {'category_name':'about'}) }}">FAQ</a></div>
-  <div class="panel_right"> <a class="red_linc_button" href="{{ path("category", {'category_name':'prices'}) }}">Прайси</a> </div>
+  <div class="panel_left"><a href="{{ path('category', {'category_name':'about'}) }}">Про компанію</a> <a href="{{ path('category', {'category_name':'question-answer'}) }}">FAQ</a></div>
+  <div class="panel_right"> <a class="red_linc_button" href="{{ path('category', {'category_name':'prices'}) }}">Прайси</a> </div>
   <div class="clear_both"></div>
 </div>
-<div id="content">
+{% block tag_content %}
+{# fo diferent background image #}
+<div id="content" > 
+{% endblock %}
+{% if data.carousel.blocks|length > 0 %}
+  <div class="main_slider_left"  >
+    <div class="slider slider-nav-top" id="slider_left_obj"> {% for block in data.carousel.blocks %}
+      {% set image = block.images|first %}
+      <div><a href="{{ asset(image.fileName, 'block') | imagine_filter('slider_thumb_big') }}"  ><img  src="{{ asset(image.fileName, 'block') | imagine_filter('slider_thumb_small') }}" /></a></div>
+      {% endfor %} </div>
+  </div>
+  <div class="main_slider_rigth"  >
+    <div class="slider slider-nav" id="slider_right_obj"> {% for block in data.carousel.blocks %}
+      {% set image = block.images|first %}
+      <div><a href="{{ asset(image.fileName, 'block') | imagine_filter('slider_thumb_big') }}"  ><img  src="{{ asset(image.fileName, 'block') | imagine_filter('slider_thumb_small') }}" /></a></div>
+      {% endfor %} </div>
+  </div>
+  {% endif %}
   <div class="stellarnav" >
-    <ul>
-      <li class="butterfly"><a href="{{ path("home") }}">
-        <div style="position:relative; width:313px"> <img class="image" src="/web/bundles/AppBundle/Resources/img/butterfly.png" >
-          <div class="butterfly_text">зовнішня<br>
-            реклама</div>
-        </div>
-        </a> </li>
-      <li><a class="a_width_241" href="{{ path("category", {'category_name':'large_format_printing'}) }}">Широкоформатний друк</a>
-        <ul>
-          <li><a href="#">Item 1</a>
-            <ul>
-              <li><a href="#">Item 2</a>
-                <ul>
-                  <li><a href="#">Item 3</a></li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-          <li><a href="#">Item 1</a></li>
-        </ul>
-      </li>
-      <li><a href="{{ path("category", {'category_name':'cutting_plotter'}) }}" class="a_width_140">Плотерна порізка</a></li>
-      <li><a href="{{ path("category", {'category_name':'payment_delivery'}) }}" class="a_width_140">Оплата доставка</a></li>
-      <li><a href="{{ path("category", {'category_name':'contacts'}) }}" class="a_width_140" >
-        <div style="margin-bottom:11px">Контакти</div>
-        </a></li>
-    </ul>
+    {{data.htmlTree|raw}}
     <div class="menu_bottom_line" ></div>
   </div>
   <div class="content_container">
+  {% block slider_home %}
     <div class="slider_home"></div>
-    <div class="main_block"> {% block body %}
+  {% endblock %}  
+     {% block body %}
+     
       
-      {% endblock %} </div>
+     {% endblock %} 
     <div class="foter_panel">
-      <div class="panel_left"> <a href="{{ path("home") }}" class="butterfly">         <img class="image" src="/web/bundles/AppBundle/Resources/img/butterfly.png" >          <span class="butterfly_text">зовнішня<br>            реклама</span>               </a> 
-    <a href="{{ path("category", {'category_name':'about'}) }}">Про компанію</a> 
-      <a href="{{ path("category", {'category_name':'about'}) }}">FAQ</a>
-      
-
-            
-      </div>
-      <div class="panel_right"> <a class="red_linc_button" href="{{ path("category", {'category_name':'prices'}) }}">Прайси</a> </div>
+      <div class="panel_left"> <a href="{{ path('home') }}" class="butterfly"> <img class="image" src="/web/img/butterfly.png" > <span class="butterfly_text">зовнішня<br>
+        реклама</span> </a> <a href="{{ path('category', {'category_name':'about'}) }}">Про компанію</a> <a href="{{ path('category', {'category_name':'question-answer'}) }}">FAQ</a> </div>
+      <div class="panel_right"> <a class="red_linc_button" href="{{ path('category', {'category_name':'prices'}) }}">Прайси</a> </div>
       <div class="clear_both"></div>
     </div>
   </div>
 </div>
+
 <div class="bootom_bacground"></div>
 {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
 <div class="admin_lincs">
-You <b>{{ app.user.username }}</b> <a href="{{ path("logout") }}">[{% trans %}logout{% endtrans %}]</a> <br />
+{% trans %}admin.you{% endtrans %} <b>{{ app.user.username }}</b> <a href="{{ path('fos_user_security_logout') }}">{% trans %}common.logout{% endtrans %}</a> <br />
+<br />
+{% if is_granted('ROLE_ADMIN') %}
+<a href="{{ path('list_category_block', {'category_name':'carousel'}) }}">[{% trans %}admin.editMainSlider{% endtrans %}]</a> <br />
+<a href="{{ path('admin_tree') }}">[{% trans %}admin.editTree{% endtrans %}]</a> <br />
+<a href="{{ path('admin_additional_service') }}">[{% trans %}admin.additionalService{% endtrans %}]</a> <br />
+{% endif %}
+</div>
 {% endif %}
 </body>
 </html>

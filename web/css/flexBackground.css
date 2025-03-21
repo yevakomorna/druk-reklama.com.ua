@@ -1,0 +1,201 @@
+#simpleLayout #content {
+background-image:url( '/web/img/background_main_1920.png ');
+background-repeat:no-repeat;
+margin:0 auto;
+padding:23px 0px 0px 0px;
+position:relative;
+}
+
+.slider_home {
+margin:0 auto;
+width:1608px;
+height:629px;
+}
+
+.content_container {
+text-align:center;
+margin:0px 0px 0px 156px;
+width:1600px;
+}
+.main_block{
+    min-height: 949px;
+}
+/*///////////////////////////////*/
+#simpleLayout.body_width_1920 #content {
+background-image:url( '/web/img/background_main_1920.png ');
+background-size:1920px auto;
+width:1903px;
+}
+
+#simpleLayout.body_width_1920 .content_container {
+margin:0px 0px 0px 156px;
+width:1600px;
+}
+
+.body_width_1920 .slider_home {
+width:1608px;
+height:494px;
+}
+
+.slider_home,.body_width_1920 .slider_home {
+}
+
+.header_panel,#simpleLayout.body_width_1920 .header_panel {
+padding:9px 20px 9px 156px;
+background:white;
+}
+
+.foter_panel,#simpleLayout.body_width_1920 .foter_panel {
+padding:23px 20px;
+background-color:rgba(255,255,255,0.07);
+}
+.body_width_1920 .main_block{
+    min-height: 494px;
+}
+/*///////////////////////////////*/
+#simpleLayout.body_width_1280 #content {
+background-image:url( '/web/img/background_main_1280.png ');
+background-size:1280px auto;
+width:1260px;
+}
+
+#simpleLayout.body_width_1280 .content_container {
+width:1024px;
+margin:0px 0px 0px 126px;
+}
+
+.body_width_1280 .slider_home {
+width:1034px;
+height:384px;
+}
+
+#simpleLayout.body_width_1280 .header_panel {
+padding:9px 20px 9px 126px;
+}
+
+#simpleLayout.body_width_1280 .foter_panel {
+}
+
+.body_width_1280 .main_slider_left,.body_width_1280 .main_slider_rigth {
+width:110px;
+margin:94px 0px 0px 7px;
+}
+.body_width_1280 .main_block{
+    min-height: 294px;
+}
+/*///////////////////////////////*/
+#simpleLayout.body_width_760 #content {
+background-image:url( '/web/img/background_main_760.png ');
+background-size:760px auto;
+width:740px;
+}
+
+#simpleLayout.body_width_760 .content_container {
+width:736px;
+margin:0px 0px 0px 2px;
+}
+
+.body_width_760 .slider_home {
+width:470px;
+height:268px;
+}
+
+#simpleLayout.body_width_760 .header_panel {
+padding:9px 10px 9px 2px;
+}
+
+#simpleLayout.body_width_760 .foter_panel {
+}
+
+.body_width_760 .main_slider_left,.body_width_760 .main_slider_rigth {
+display:none;
+}
+.body_width_760 .main_block{
+    min-height: 214px;
+}
+
+/*///////////////////////////////*/
+.body_width_1920 .slider_home.min_height {
+height:494px;
+}
+
+.body_width_1280 .slider_home.min_height {
+height:294px;
+}
+
+.body_width_760 .slider_home.min_height {
+height:214px;
+}
+/*////////////// diferent backgr /////////////////*/
+
+#simpleLayout.body_width_1920 #content.contacts {
+background-image:url( '/web/img/background_contacts_1920.png ');
+}
+
+#simpleLayout.body_width_1280 #content.contacts {
+background-image:url( '/web/img/background_contacts_1280.png ');
+}
+
+#simpleLayout.body_width_760 #content.contacts {
+background-image:url( '/web/img/background_contacts_760.png ');
+}
+/*///////////////////////////////*/
+#simpleLayout.body_width_1920 #content.order {
+background-image:url( '/web/img/background_druk_online_1920.png ');
+}
+
+#simpleLayout.body_width_1280 #content.order {
+background-image:url( '/web/img/background_druk_online_1280.png ');
+}
+
+#simpleLayout.body_width_760 #content.order {
+background-image:url( '/web/img/background_druk_online_760.png ');
+}
+
+
+/*///////////////////////////////*/
+.contacts_in_slider {
+padding-left:14%;
+width:757px;
+padding-top:3%;
+}
+.contacts_in_slider .h1_white {
+    color: white;
+    font-weight: normal;
+    text-shadow: 2px 2px 2px black;
+    text-align: left;
+    padding:0px 0px 0px 28px;  
+    margin: 0;
+}
+
+.contacts_in_slider .table_contacts {
+    font-size: 30px;    
+  
+}
+
+.contacts_in_slider .table_contacts img {
+    height: 45px;
+}
+
+.body_width_1280 .contacts_in_slider .table_contacts {
+    font-size: 21px;    
+}
+
+.body_width_1280 .contacts_in_slider .table_contacts img {
+    height: 25px;
+}
+
+.body_width_760 .contacts_in_slider .table_contacts {
+    font-size: 21px;    
+}
+
+.body_width_760 .contacts_in_slider .table_contacts img {
+    height: 25px;
+}
+.body_width_760 .contacts_in_slider {
+    padding-top: 0;
+}
+
+.body_width_760 .contacts_in_slider .h1_white {
+    font-size: 25px;
+}

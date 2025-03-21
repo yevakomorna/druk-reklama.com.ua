@@ -1,0 +1,20 @@
+{% extends 'default/simple_layout.html' %}
+
+{% block body %}
+<div class="main_block">
+
+
+{{ form_start(form) }}
+    {{ form_row(form.title) }}
+    {{ form_row(form.description) }}
+    {{ form_row(form.priority) }}
+<h3>Tags</h3>
+<div class="tags"> {% for BlockImage in form.images %}
+  <div> {% if BlockImage.file_name.vars.value %} <img src="{{ asset(BlockImage.file_name.vars.value, 'block') | imagine_filter('slider_thumb_small') }}"  style="width: 250px;" /> {% endif %}
+    
+    {{ form_row(BlockImage.file_name) }}
+    {{ form_row(BlockImage.fileNameAssert) }} </div>
+  {% endfor %} </div>
+{{ form_end(form) }}
+</div>
+{% endblock %}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+{% block title %}
+<title>admin</title>
+{% endblock %}
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link rel="icon" type="image/ico" href="/web/img/favicon.ico"/>
+{% block css %}
+<link rel="stylesheet" type="text/css" media="all" href="/web/bundles/twitterbootstrap/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" media="all" href="/web/css/simpleLayout.css">
+<link rel="stylesheet" type="text/css" media="all" href="/web/css/flexBackground.css">
+<link rel="stylesheet" type="text/css" media="all" href="/web/css/adminLayout.css">
+
+{% endblock %}				
+									
+		{% block javascript %}
+<script type="text/javascript" src="/web/assets/jquery/jquery.min.js"></script>
+
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+   $('.admin_form_edit_wrap select option').each(function(){
+    var opt_label = $(this).text(); 
+    opt_label.split('_').join(' ');
+    $(this).text(opt_label);
+   });
+});
+</script>
+{% endblock %}
+</head>
+<body id="simpleLayout" class="" >
+
+<div id="content"> 
+  
+  <div class="content_container">
+    
+    <div class="main_block"> {% block body %}
+      
+      {% endblock %} </div>
+    
+  </div>
+</div>
+<div class="bootom_bacground"></div>
+{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
+<div class="admin_lincs">
+{% trans %}admin.you{% endtrans %} <b>{{ app.user.username }}</b> <a href="{{ path('fos_user_security_logout') }}">{% trans %}common.logout{% endtrans %}</a> <br />
+<br />
+{% if is_granted('ROLE_ADMIN') %}
+<a href="{{ path('list_category_block', {'category_name':'carousel'}) }}">[{% trans %}admin.editMainSlider{% endtrans %}]</a> <br />
+<a href="{{ path('admin_tree') }}">[{% trans %}admin.editTree{% endtrans %}]</a> <br />
+<a href="{{ path('admin_additional_service') }}">[{% trans %}admin.additionalService{% endtrans %}]</a> <br />
+{% endif %}
+</div>
+{% endif %}
+</body>
+</html>

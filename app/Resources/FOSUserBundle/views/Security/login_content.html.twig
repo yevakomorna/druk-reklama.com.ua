@@ -1,0 +1,32 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% if error %}
+    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+{% endif %}
+
+<form action="{{ path("fos_user_security_check") }}" method="post">
+    {% if csrf_token %}
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+    {% endif %}
+    <div>
+    <label for="username">{{ 'security.login.email'|trans }}</label>
+    <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" autocomplete="username" />
+    </div>
+    <div>
+    <label for="password">{{ 'security.login.password'|trans }}</label>
+    <input type="password" id="password" name="_password" required="required" autocomplete="current-password" />
+    </div>
+    <div>
+    <input type="checkbox" id="remember_me" name="_remember_me" value="on" class="inline_checkbox" />
+    <label for="remember_me" class="label_for_checkbox">{{ 'security.login.remember_me'|trans }}</label>
+    </div>
+    
+        {% set _target_path = app.request.query.get('_target_path') %}
+        {% if _target_path %}
+        <input type="hidden" name="_target_path" value="{{_target_path}}" />
+        {% endif %}
+    
+    <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+    <br>  <br> <br>
+    <a href="{{ path("fos_user_registration_register") }}">{{ 'layout.register'|trans }}</a> <br>   <a href="{{ path("fos_user_resetting_request") }}">{{ 'layout.forgot_password'|trans }}</a>
+</form>

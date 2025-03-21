@@ -1,0 +1,23 @@
+{% extends 'default/simple_layout.html' %}
+
+{% block body %}
+<div class="main_block">
+<table class="admin_edit_table" >
+  <tr>
+    <td colspan="5"><a href="{{ path('add_category_block', {'category_name':category.name}) }}">[{% trans %}admin.add{% endtrans %}]</a></td>
+  </tr>
+  {% for block in pagination %}
+  <tr {% if loop.index is odd %}class="color"{% endif %}>
+  
+  <td>{{ block.id }}</td>
+    <td>{{ block.title }}</td>
+    <td>{% if block.status == 1 %}{% trans %}admin.active{% endtrans %}{% else %}{% trans %}admin.hidden{% endtrans %}{% endif %}</td>
+    <td> {% set image = block.images|first %}
+      {% if image %} <img src="{{ asset(image.fileName, 'block') | imagine_filter('slider_thumb_small') }}"   /> {% endif %} </td>
+    <td><a href="{{ path('edit_category_block', {'block_id':block.id}) }}">[{% trans %}admin.edit{% endtrans %}]</a> <a href="{{ path('kill_category_block', {'block_id':block.id}) }}">[{% trans %}admin.dellete{% endtrans %}]</a></td>
+  </tr>
+  {% endfor %}
+</table>
+<div class="navigation"> {{ knp_pagination_render(pagination) }} </div>
+</div>
+{% endblock %}

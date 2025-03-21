@@ -1,0 +1,48 @@
+{% extends 'default/admin/admin_layout.html' %}
+  
+  {% block body %}
+  {% if form %}
+  <div class="admin_form_edit_wrap">
+  	{% form_theme form 'bootstrap_3_layout.html.twig' %}
+    <h5>{{form_name}}</h5>
+	{{ form_start(form) }}
+	{{ form_widget(form) }}
+	{{ form_end(form) }}
+    </div>
+  {% endif %}
+    {% if form_2 %}
+  <div class="admin_form_edit_wrap">
+  	{% form_theme form_2 'bootstrap_3_layout.html.twig' %}
+    <h5>{{form_name_2}}</h5>
+	{{ form_start(form_2) }}
+	{{ form_widget(form_2) }}
+	{{ form_end(form_2) }}
+    </div>
+  {% endif %}
+  <div style="clear:both"></div>
+  <h3>Структура сайту</h3>
+
+  
+  <table cellpadding="0" cellspacing="0" class="tree_admin" >
+  {% for section in sections %}
+  
+  <tr class="{% if loop.index is odd%}tr_odd{% else %}tr_even{% endif %} {% if sectionId == section.id %}tr_curent_edit{% endif %}">
+  {% set padding_left = section.lvl*18 %}
+    <td style="padding-left:{{padding_left}}px" >{{section.getTitleI18n(app.request.locale)}} <span class="small_text">(<a href="{{ path('category', {'category_name':section.name}) }}" target="_blank">{{section.name}}</a>)</span></td>
+    <td nowrap="nowrap" class="action_lincs" >
+    {% if loop.index > 1 %}
+    <a href="{{ path('admin_tree', {'mode':'edit','section_id':section.id}) }}" title="{% trans %}admin.edit{% endtrans %}"><img src="/web/img/admin/buttons/edit.gif" /></a>
+    <a href="{{ path('admin_tree', {'mode':'move','section_id':section.id}) }}" title="{% trans %}admin.move{% endtrans %}"><img src="/web/img/admin/buttons/move.gif" /></a>
+    <a href="{{ path('admin_tree', {'mode':'dellete','section_id':section.id}) }}" title="{% trans %}admin.dellete{% endtrans %}" onClick="if (confirm('Справді видалити?')){}else{return false;}" ><img src="/web/img/admin/buttons/dell.gif" /></a>&nbsp;&nbsp;&nbsp;
+    {% endif %}    
+    <a href="{{ path('admin_tree', {'mode':'add','section_id':section.id}) }}" title="{% trans %}admin.addSubmenu{% endtrans %}"  ><img src="/web/img/admin/buttons/add.gif" /></a>    
+    
+    </td>
+
+  </tr>
+      {% endfor %}
+        
+</table>
+
+  
+  {% endblock %}

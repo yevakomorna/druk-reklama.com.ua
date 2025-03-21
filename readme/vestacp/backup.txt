@@ -1,0 +1,12 @@
+для бекапів на фтп
+файл
+/usr/local/vesta/conf/ftp.backup.conf
+HOST='vps24331.backup.ukraine.com.ua'
+PORT='21'
+USERNAME='vps_24331'
+PASSWORD='X0Gsin6xG6E18sC4'
+BPATH='/zreklama'
+retention=5
+
+/usr/local/vesta/conf/vesta.conf
+BACKUP_SYSTEM='local,ftp'

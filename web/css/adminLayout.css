@@ -1,0 +1,53 @@
+.tree_admin {
+width:100%;
+border-collapse:collapse;
+}
+
+.tree_admin tr td {
+text-align:left;
+border-left:1px solid;
+border-top:1px solid;
+padding:2px 2px 2px 5px;
+}
+
+.tree_admin tr {
+border-right:1px solid;
+border-bottom:1px solid;
+}
+
+.tree_admin .tr_odd {
+background:#E9E9E9;
+}
+
+.tree_admin .tr_even {
+background:#F5F5F5;
+}
+
+.tree_admin tr:hover {
+background:#9B9B9B;
+}
+
+.tree_admin .tr_curent_edit, .admin_select_current {
+background:#AAEABF;
+}
+
+.tree_admin .small_text {
+font-size:13px;
+}
+
+.tree_admin .action_lincs a {
+margin-right:2px;
+}
+
+.tree_admin .action_lincs {
+width:7%;
+text-align: right;
+}
+
+
+.admin_form_edit_wrap {
+text-align:left;
+background:#AAEABF;
+padding:7px 23px;
+display: inline-block;
+}

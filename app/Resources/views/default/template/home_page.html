@@ -1,9 +1,13 @@
 {% extends 'default/simple_layout.html' %}
 
 {% block body %}
-{% if is_granted('ROLE_ADMIN') %}
-<a href="{{ path("edit_category", {"category_name": data.category.name} ) }}">[{% trans %}edit{% endtrans %}]</a>
-<br />
+<div class="main_block">
+{% if is_granted('ROLE_ADMIN') %} <a href="{{ path("edit_category", {"category_name": data.category.name} ) }}">[{% trans %}admin.edit{% endtrans %}]</a> <br />
 {% endif %}
-{{data.category.description|raw}}
+{{data.category.getDescriptionI18n(app.request.locale)|raw}}
+<br /><br />
+
+
+
+</div>
 {% endblock %}
